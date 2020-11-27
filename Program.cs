@@ -4,47 +4,58 @@ namespace ZahlenHochschuleWorms
 {
     class Program
     {
+        public static string userInput;
         static void Main(string[] args)
         {
             int roundCounter = 0;
             int userMaxValue = 0;
-
+            
             do
             {
-                Console.WriteLine("Sie können das Programm jederzeit über die Escape-Taste verlassen.");
+                Console.WriteLine("Sie können das Programm jederzeit über die Eingabe \"exit\" verlassen.");
                 if (userMaxValue != 0)
                 {
                     Console.WriteLine("Wollen Sie eine neue Maximalzahl angeben? ('j' oder 'n')");
-                    if (Console.ReadKey(true).Key == ConsoleKey.J)
+                    userInput = Console.ReadLine();
+                    if (userInput == "j")
                     {
+                        Console.WriteLine("Geben Sie eine Maximalzahl (positive Ganzzahl) ein:");
+                        userInput = Console.ReadLine();
                         userMaxValue = UserInsertMaxNumber();
                     }
                 }
                 else
                 {
+                    Console.WriteLine("Geben Sie eine Maximalzahl (positive Ganzzahl) ein:");
+                    userInput = Console.ReadLine();
                     userMaxValue = UserInsertMaxNumber();
                 }
+
+                if (userInput == "exit") break;
                
                 int randomValue = GenerateRandomNumber(userMaxValue);
 
-                while (!UserGuessNumber(randomValue))
-                {
-                    roundCounter++;
-                }
+                Console.WriteLine("Erraten Sie die Zufallszahl:");
 
-            } while (Console.ReadKey().Key != ConsoleKey.Escape);
+                do 
+                {
+                    userInput = Console.ReadLine();
+                    roundCounter++;
+                } while (!UserGuessNumber(randomValue));
+
+            } while (userInput != "exit");
 
             Console.WriteLine($"Das Spiel wurde beendet. Sie haben insgesamt {roundCounter} mal geraten.");
-            Console.ReadKey();
         }
 
 
         static bool UserGuessNumber(int randNumb)
         {
-            Console.WriteLine("Erraten Sie die Zufallszahl:");
-            int.TryParse(Console.ReadLine(), out int userGuess);
+            if (userInput == "exit") return true;
 
-            if (userGuess == 0) return false;
+            int.TryParse(userInput, out int userGuess);
+
+            if (userGuess == 0) UserGuessNumber(randNumb);
 
             if (userGuess == randNumb)
             {
@@ -73,11 +84,9 @@ namespace ZahlenHochschuleWorms
 
             do
             {
-                Console.WriteLine("Geben Sie eine Maximalzahl (positive Ganzzahl) ein:");
-                
-                var eingabeUser = Console.ReadLine();
+                if (userInput == "exit") return result;
 
-                int.TryParse(eingabeUser, out result);
+                int.TryParse(userInput, out result);
 
                 if (result <= 0)
                 {
