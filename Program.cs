@@ -19,15 +19,11 @@ namespace ZahlenHochschuleWorms
                     userInput = Console.ReadLine();
                     if (userInput == "j")
                     {
-                        Console.WriteLine("Geben Sie eine Maximalzahl (positive Ganzzahl) ein:");
-                        userInput = Console.ReadLine();
                         userMaxValue = UserInsertMaxNumber();
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Geben Sie eine Maximalzahl (positive Ganzzahl) ein:");
-                    userInput = Console.ReadLine();
                     userMaxValue = UserInsertMaxNumber();
                 }
 
@@ -81,6 +77,9 @@ namespace ZahlenHochschuleWorms
         static int UserInsertMaxNumber()
         {
             int result = 0;
+
+            Console.WriteLine("Geben Sie eine Maximalzahl (positive Ganzzahl) ein:");
+            userInput = Console.ReadLine();
 
             do
             {
