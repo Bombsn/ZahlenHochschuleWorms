@@ -5,27 +5,15 @@ namespace ZahlenHochschuleWorms
     class Program
     {
         public static string userInput;
+        public static int userMaxValue;
+
         static void Main(string[] args)
         {
             int roundCounter = 0;
-            int userMaxValue = 0;
             
             do
             {
-                Console.WriteLine("Sie können das Programm jederzeit über die Eingabe \"exit\" verlassen.");
-                if (userMaxValue != 0)
-                {
-                    Console.WriteLine("Wollen Sie eine neue Maximalzahl angeben? ('j' oder 'n')");
-                    userInput = Console.ReadLine();
-                    if (userInput == "j")
-                    {
-                        userMaxValue = UserInsertMaxNumber();
-                    }
-                }
-                else
-                {
-                    userMaxValue = UserInsertMaxNumber();
-                }
+                AskForMaxVal();
 
                 if (userInput == "exit") break;
                
@@ -36,12 +24,34 @@ namespace ZahlenHochschuleWorms
                 do 
                 {
                     userInput = Console.ReadLine();
+                    if (userInput == "exit") break;
                     roundCounter++;
                 } while (!UserGuessNumber(randomValue));
 
             } while (userInput != "exit");
 
             Console.WriteLine($"Das Spiel wurde beendet. Sie haben insgesamt {roundCounter} mal geraten.");
+            Console.ReadKey(true);
+        }
+
+
+        static void AskForMaxVal()
+        {
+            Console.WriteLine("Sie können das Programm jederzeit über die Eingabe \"exit\" verlassen.");
+
+            if (userMaxValue != 0)
+            {
+                Console.WriteLine("Wollen Sie eine neue Maximalzahl angeben? ('j' oder 'n')");
+                userInput = Console.ReadLine();
+                if (userInput == "j")
+                {
+                    userMaxValue = UserInsertMaxNumber();
+                }
+            }
+            else
+            {
+                userMaxValue = UserInsertMaxNumber();
+            }
         }
 
 
@@ -51,7 +61,7 @@ namespace ZahlenHochschuleWorms
 
             int.TryParse(userInput, out int userGuess);
 
-            if (userGuess == 0) UserGuessNumber(randNumb);
+            if (userGuess == 0) return false;
 
             if (userGuess == randNumb)
             {
@@ -78,11 +88,11 @@ namespace ZahlenHochschuleWorms
         {
             int result = 0;
 
-            Console.WriteLine("Geben Sie eine Maximalzahl (positive Ganzzahl) ein:");
-            userInput = Console.ReadLine();
-
             do
             {
+                Console.WriteLine("Geben Sie eine Maximalzahl (positive Ganzzahl) ein:");
+                userInput = Console.ReadLine();
+
                 if (userInput == "exit") return result;
 
                 int.TryParse(userInput, out result);
@@ -96,6 +106,7 @@ namespace ZahlenHochschuleWorms
 
             return result;
         }
+
 
         static int GenerateRandomNumber(int maxVal)
         {
