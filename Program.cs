@@ -43,15 +43,13 @@ namespace ZahlenHochschuleWorms
             {
                 Console.WriteLine("Wollen Sie eine neue Maximalzahl angeben? ('j' oder 'n')");
                 userInput = Console.ReadLine();
-                if (userInput == "j")
+                if (userInput != "j")
                 {
-                    userMaxValue = UserInsertMaxNumber();
+                    return;
                 }
             }
-            else
-            {
-                userMaxValue = UserInsertMaxNumber();
-            }
+            
+            userMaxValue = UserInsertMaxNumber();
         }
 
 
